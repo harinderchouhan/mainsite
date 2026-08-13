@@ -15,6 +15,7 @@ const quickLinks = [
   { href: "/about", label: "About Us" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/industries", label: "Industries" },
+  { href: "/resources/website-growth-checklist", label: "Free Checklist" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];

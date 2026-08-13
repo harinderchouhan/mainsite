@@ -3,6 +3,7 @@ import { StatsBand } from "@/components/home/StatsBand";
 import { ProcessSteps } from "@/components/home/ProcessSteps";
 import { FeaturedCaseStudy } from "@/components/home/FeaturedCaseStudy";
 import { TeamPreview } from "@/components/home/TeamPreview";
+import { LeadMagnetBanner } from "@/components/home/LeadMagnetBanner";
 import { FAQ } from "@/components/home/FAQ";
 import { ServicesGrid } from "@/components/ServicesGrid";
 import { WhyChooseUsGrid } from "@/components/WhyChooseUsGrid";
@@ -96,7 +97,11 @@ export default function Home() {
         </Container>
       </Section>
 
-      <Section>
+      <Section className="bg-surface">
+        <LeadMagnetBanner />
+      </Section>
+
+      <Section className="bg-surface">
         <Container>
           <SectionHeading
             eyebrow="Leadership"
@@ -111,7 +116,7 @@ export default function Home() {
         </Container>
       </Section>
 
-      <Section className="bg-surface">
+      <Section>
         <Container>
           <SectionHeading
             eyebrow="FAQ"

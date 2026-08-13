@@ -12,6 +12,7 @@ const navLinks = [
   { href: "/industries", label: "Industries" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/about", label: "About" },
+  { href: "/resources/website-growth-checklist", label: "Free Guide" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];

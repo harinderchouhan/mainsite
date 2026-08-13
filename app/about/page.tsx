@@ -7,6 +7,7 @@ import { Container } from "@/components/ui/Container";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { StatCard } from "@/components/ui/StatCard";
 import { Card } from "@/components/ui/Card";
+import { founders } from "@/lib/team";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -18,21 +19,6 @@ const stats = [
   { value: "1000+", label: "Clients served" },
   { value: "12+", label: "Years of experience" },
   { value: "1200+", label: "Projects completed" },
-];
-
-const founders = [
-  {
-    name: "Herry Chouhan",
-    role: "Founder",
-    bio: "12+ years in web development and digital solutions, leading HanuiT Solutions' technical direction and client delivery.",
-    initials: "HC",
-  },
-  {
-    name: "Anamika Singla",
-    role: "CEO",
-    bio: "11+ years in technology and business strategy, shaping how HanuiT Solutions grows and serves its clients.",
-    initials: "AS",
-  },
 ];
 
 export default function AboutPage() {

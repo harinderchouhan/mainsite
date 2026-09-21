@@ -22,11 +22,15 @@ for the blog, the portfolio, and their homepage previews.
 
 ## Setup
 
-1. **Upload this whole folder** to your WordPress hosting — anywhere
+1. **Upload this folder's contents** to your WordPress hosting — anywhere
    reachable over HTTPS. It does not need to sit inside your WordPress
-   install; it only needs network access to the same MySQL database. A
-   common choice is a sibling folder next to `wp-content`, e.g.
-   `public_html/wp-api/`.
+   install; it only needs network access to the same MySQL database. Two
+   common choices:
+   - A sibling folder next to `wp-content`, e.g. `public_html/wp-api/`
+     (endpoints end up at `https://yourdomain.com/wp-api/posts.php`).
+   - The document root of its own subdomain, e.g. `app.yourdomain.com`
+     (endpoints end up at `https://app.yourdomain.com/posts.php`) — this
+     is HanuiT Solutions' own setup.
 
 2. **Fill in `config.php`** with your real database details — the exact
    same values as in your WordPress `wp-config.php`:
@@ -36,10 +40,11 @@ for the blog, the portfolio, and their homepage previews.
    - `ALLOWED_ORIGIN` — leave as `'*'`, or lock it down to your Next.js
      site's exact origin (e.g. `https://www.hanuitsolutions.com`).
 
-3. **Test it** by visiting these URLs directly in a browser (or `curl`):
+3. **Test it** by visiting these URLs directly in a browser (or `curl`) —
+   adjust the path to match wherever you uploaded to in step 1:
    ```
-   https://yourdomain.com/wp-api/posts.php?per_page=3
-   https://yourdomain.com/wp-api/post.php?slug=some-real-post-slug
+   https://app.yourdomain.com/posts.php?per_page=3
+   https://app.yourdomain.com/post.php?slug=some-real-post-slug
    ```
    You should get back JSON. If you get a 500 error, check your server's
    PHP error log — it'll have the real database error (the API itself
@@ -49,7 +54,7 @@ for the blog, the portfolio, and their homepage previews.
    variable in the site's deployment (`.env.local` for local dev, or your
    host's environment variable settings in production):
    ```
-   WP_API_BASE_URL=https://yourdomain.com/wp-api
+   WP_API_BASE_URL=https://app.yourdomain.com
    ```
    Once that's set, the blog listing, single post pages, the portfolio
    listing, single case study pages, and both homepage previews all start

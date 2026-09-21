@@ -42,10 +42,11 @@ export default function AboutPage() {
                 HanuiT Solutions started with a simple idea: a website should
                 be judged by the results it produces, not just how it looks
                 in a portfolio. Over 12+ years, that idea has taken us across
-                dozens of industries — from local trades and clinics to
-                manufacturers and multi-location retailers — building sites,
-                stores, and search strategies that hold up under real
-                traffic and real customers.
+                dozens of industries — and today it&rsquo;s why we&rsquo;ve chosen to
+                focus deeply on two: pest control companies and dental
+                practices, building sites, booking flows, and search
+                strategies that hold up under real traffic and real
+                customers.
               </p>
               <p className="mt-4 text-base leading-relaxed text-muted">
                 Today we&rsquo;re a full-service digital team covering design,

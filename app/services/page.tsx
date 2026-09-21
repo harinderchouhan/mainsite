@@ -8,8 +8,15 @@ import { Section } from "@/components/ui/Section";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Web design, web development, SEO, ecommerce, and WordPress services from HanuiT Solutions — built to grow your business online.",
+    "Website design, SEO, ads management, social media, automation, and AI workflows from HanuiT Solutions — built specifically for pest control and dental businesses.",
 };
+
+const stats = [
+  { value: "8", label: "focused services" },
+  { value: "1", label: "team, no subcontractors" },
+  { value: "12+", label: "years of experience" },
+  { value: "1000+", label: "clients served" },
+];
 
 export default function ServicesPage() {
   return (
@@ -17,8 +24,24 @@ export default function ServicesPage() {
       <PageHeader
         eyebrow="Services"
         title="Everything you need to grow online"
-        description="Five focused services, one team — so your website, your search visibility, and your online store all work together instead of pulling in different directions."
+        description="From your website to your ads, your SEO, and your social media — one team handling all of it, so nothing gets stitched together from separate vendors who don't talk to each other."
       />
+
+      <div className="border-b border-border bg-surface">
+        <Container>
+          <div className="grid grid-cols-2 divide-x divide-border sm:grid-cols-4">
+            {stats.map((stat) => (
+              <div key={stat.label} className="px-2 py-6 text-center">
+                <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
+                  {stat.value}
+                </p>
+                <p className="mt-1 text-xs text-muted sm:text-sm">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </div>
+
       <Section>
         <Container>
           <ServicesGrid />

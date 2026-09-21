@@ -20,12 +20,12 @@ export function Blob({
     >
       <defs>
         <linearGradient id="blob-gradient-brand" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#8b78ff" />
-          <stop offset="100%" stopColor="#5730f0" />
+          <stop offset="0%" stopColor="#61729b" />
+          <stop offset="100%" stopColor="#303d5b" />
         </linearGradient>
         <linearGradient id="blob-gradient-warm" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#ffb488" />
-          <stop offset="100%" stopColor="#ff8a4c" />
+          <stop offset="0%" stopColor="#5dcbf5" />
+          <stop offset="100%" stopColor="#00b0f0" />
         </linearGradient>
       </defs>
       <path

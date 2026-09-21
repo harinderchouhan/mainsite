@@ -6,21 +6,21 @@
   --foreground: #17162b;
   --muted: #6b6885;
 
-  /* Brand: confident indigo-violet */
-  --brand-50: #f2f0ff;
-  --brand-100: #e6e3ff;
-  --brand-200: #cfc9ff;
-  --brand-300: #ab9dff;
-  --brand-400: #8b78ff;
-  --brand-500: #6a4bff;
-  --brand-600: #5730f0;
-  --brand-700: #4623c9;
-  --brand-800: #391da3;
-  --brand-900: #2f1c81;
+  /* Brand: HanuiT Solutions navy, matched from the live site logo + CTA buttons */
+  --brand-50: #eef1f6;
+  --brand-100: #dce2ed;
+  --brand-200: #b8c2d6;
+  --brand-300: #8c9bb9;
+  --brand-400: #61729b;
+  --brand-500: #45567d;
+  --brand-600: #303d5b;
+  --brand-700: #26314a;
+  --brand-800: #1c2436;
+  --brand-900: #131a28;
 
-  /* Warm secondary accent used sparingly for warmth */
-  --accent-warm: #ff8a4c;
-  --accent-warm-soft: #ffe3d1;
+  /* Cyan secondary accent, matched from the live site logo badge */
+  --accent-warm: #00b0f0;
+  --accent-warm-soft: #d6f2fc;
 
   --ring: var(--brand-500);
   --border: #e7e4f6;
@@ -63,16 +63,16 @@ h1, h2, h3, h4, .font-display {
 
 /* Dot-grid background pattern, used behind hero / section blocks */
 .bg-dot-grid {
-  background-image: radial-gradient(circle, rgba(87, 48, 240, 0.16) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(48, 61, 91, 0.16) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
 /* Soft mesh gradient used behind hero sections */
 .bg-mesh {
   background-image:
-    radial-gradient(40% 50% at 15% 10%, rgba(106, 75, 255, 0.18), transparent 60%),
-    radial-gradient(35% 45% at 85% 15%, rgba(255, 138, 76, 0.16), transparent 60%),
-    radial-gradient(50% 60% at 50% 100%, rgba(106, 75, 255, 0.10), transparent 60%);
+    radial-gradient(40% 50% at 15% 10%, rgba(69, 86, 125, 0.18), transparent 60%),
+    radial-gradient(35% 45% at 85% 15%, rgba(0, 176, 240, 0.16), transparent 60%),
+    radial-gradient(50% 60% at 50% 100%, rgba(69, 86, 125, 0.10), transparent 60%);
 }
 
 .text-gradient {
@@ -97,4 +97,72 @@ h1, h2, h3, h4, .font-display {
 ::selection {
   background: var(--brand-200);
   color: var(--brand-900);
+}
+
+/* Continuous horizontal scroll used by the video testimonials marquee. */
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-x linear infinite;
+  animation-duration: var(--marquee-duration, 30s);
+}
+
+/* Rendered WordPress post content on single blog post pages. */
+.blog-content {
+  color: var(--foreground);
+  line-height: 1.75;
+}
+.blog-content > * + * {
+  margin-top: 1.25em;
+}
+.blog-content h2 {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-top: 1.75em;
+}
+.blog-content h3 {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-top: 1.5em;
+}
+.blog-content a {
+  color: var(--brand-700);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.blog-content ul,
+.blog-content ol {
+  padding-left: 1.5rem;
+}
+.blog-content ul {
+  list-style: disc;
+}
+.blog-content ol {
+  list-style: decimal;
+}
+.blog-content li + li {
+  margin-top: 0.5em;
+}
+.blog-content blockquote {
+  border-left: 3px solid var(--brand-300);
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--muted);
+}
+.blog-content img {
+  border-radius: 1rem;
+  max-width: 100%;
+  height: auto;
+}
+.blog-content strong {
+  font-weight: 600;
 }

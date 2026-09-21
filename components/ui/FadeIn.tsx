@@ -11,10 +11,13 @@ export function FadeIn({
   children,
   delay = 0,
   className,
+  spring = false,
 }: {
   children: React.ReactNode;
   delay?: number;
   className?: string;
+  /** Use spring physics (slight overshoot) instead of an eased tween — a punchier feel for hero-style reveals. */
+  spring?: boolean;
 }) {
   return (
     <motion.div
@@ -23,7 +26,11 @@ export function FadeIn({
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
       variants={variants}
-      transition={{ duration: 0.5, delay, ease: "easeOut" }}
+      transition={
+        spring
+          ? { type: "spring", stiffness: 260, damping: 22, delay }
+          : { duration: 0.5, delay, ease: "easeOut" }
+      }
     >
       {children}
     </motion.div>

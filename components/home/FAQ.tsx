@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { faqs } from "@/lib/faq";
+import { faqs as defaultFaqs, type FaqItem } from "@/lib/faq";
 import { cn } from "@/lib/utils";
 
-export function FAQ() {
+export function FAQ({ faqs = defaultFaqs }: { faqs?: FaqItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (

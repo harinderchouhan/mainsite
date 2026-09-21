@@ -12,6 +12,11 @@ export function StickyCtaBar() {
 
   useEffect(() => {
     if (sessionStorage.getItem("hanuit_sticky_dismissed") === "1") {
+      // Intentionally deferred to an effect (not a lazy useState initializer):
+      // sessionStorage is unavailable during SSR, so computing this eagerly
+      // would make the client's first render diverge from the server-rendered
+      // HTML and trigger a hydration mismatch. Checking post-mount avoids that.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setDismissed(true);
       return;
     }

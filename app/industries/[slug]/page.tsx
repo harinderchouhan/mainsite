@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { industries, getIndustry } from "@/lib/industries";
-import { categoryContent } from "@/lib/industry-content";
+import { getIndustryContent } from "@/lib/industry-content";
 import { getService } from "@/lib/services";
 import { getIcon } from "@/lib/icon-map";
+import { getIndustryPortfolio } from "@/lib/industry-portfolios";
 import { CtaBanner } from "@/components/CtaBanner";
 import { Container } from "@/components/ui/Container";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { IconTile } from "@/components/ui/IconTile";
 import { ServiceLinkCard } from "@/components/industries/ServiceLinkCard";
+import { IndustryPortfolioGallery } from "@/components/industries/IndustryPortfolioGallery";
 
 type Params = { slug: string };
 
@@ -23,10 +25,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const industry = getIndustry(slug);
-  if (!industry) return {};
+  const content = industry ? getIndustryContent(industry.slug) : undefined;
+  if (!industry || !content) return {};
   return {
     title: `Web Design & Digital Solutions for ${industry.name}`,
-    description: categoryContent[industry.category].heroDescription(industry.name),
+    description: content.heroDescription,
   };
 }
 
@@ -39,11 +42,14 @@ export default async function IndustryDetailPage({
   const industry = getIndustry(slug);
   if (!industry) notFound();
 
-  const content = categoryContent[industry.category];
+  const content = getIndustryContent(industry.slug);
+  if (!content) notFound();
+
   const Icon = getIcon(industry.icon);
   const relevantServices = content.serviceSlugs
     .map((s) => getService(s))
     .filter((s): s is NonNullable<typeof s> => Boolean(s));
+  const portfolioItems = getIndustryPortfolio(industry.slug);
 
   return (
     <>
@@ -54,24 +60,41 @@ export default async function IndustryDetailPage({
               <IconTile icon={Icon} size="lg" />
             </div>
             <span className="mt-5 inline-flex items-center rounded-full border border-brand-200 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700 backdrop-blur-sm">
-              {industry.category}
+              {industry.tagline}
             </span>
             <h1 className="mt-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
               Websites for {industry.name}
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-              {content.heroDescription(industry.name)}
+              {content.heroDescription}
             </p>
           </div>
         </Container>
       </div>
+
+      {portfolioItems.length > 0 ? (
+        <Section className="bg-surface">
+          <Container>
+            <SectionHeading
+              eyebrow="Our work"
+              title={`Real ${industry.name.toLowerCase()} websites we've built`}
+              description="Live sites for real clients in this industry — not mockups."
+              align="center"
+              className="mx-auto"
+            />
+            <div className="mt-12">
+              <IndustryPortfolioGallery items={portfolioItems} />
+            </div>
+          </Container>
+        </Section>
+      ) : null}
 
       <Section>
         <Container>
           <SectionHeading
             eyebrow="Why it matters"
             title={`Why ${industry.name.toLowerCase()} businesses need a strong web presence`}
-            description={content.whyIntro(industry.name)}
+            description={content.whyIntro}
           />
           <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
             {content.challenges.map((challenge) => {
@@ -88,7 +111,7 @@ export default async function IndustryDetailPage({
                     {challenge.title}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">
-                    {challenge.description(industry.name)}
+                    {challenge.description}
                   </p>
                 </div>
               );

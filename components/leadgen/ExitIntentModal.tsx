@@ -17,7 +17,7 @@ export function ExitIntentModal() {
     if (EXCLUDED_PATHS.includes(pathname)) return;
     if (sessionStorage.getItem(STORAGE_KEY) === "1") return;
 
-    let pageLoadedAt = Date.now();
+    const pageLoadedAt = Date.now();
     let triggered = false;
 
     function trigger() {

@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { industries, industryCategories } from "@/lib/industries";
+import { ArrowRight } from "lucide-react";
+import { industries } from "@/lib/industries";
+import { getIndustryContent } from "@/lib/industry-content";
 import { getIcon } from "@/lib/icon-map";
 import { PageHeader } from "@/components/PageHeader";
 import { CtaBanner } from "@/components/CtaBanner";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
+import { IconTile } from "@/components/ui/IconTile";
 
 export const metadata: Metadata = {
   title: "Industries We Serve",
   description:
-    "HanuiT Solutions builds websites and digital strategies for 49+ industries, from trades and manufacturing to healthcare and hospitality.",
+    "HanuiT Solutions builds websites for pest control companies and dental clinics — two industries we focus on deeply, instead of spreading thin across everything.",
 };
 
 export default function IndustriesPage() {
@@ -18,40 +21,39 @@ export default function IndustriesPage() {
     <>
       <PageHeader
         eyebrow="Industries"
-        title="Websites built around how your industry actually works"
-        description={`We've worked across ${industries.length}+ industries, which means we show up already understanding your customers, your sales cycle, and what your website actually needs to do.`}
+        title="We build for two industries. That's the point."
+        description="Instead of being generalists, we've focused our team on pest control companies and dental clinics — so we already understand your customers, your booking flow, and what your website needs to do before the first call."
       />
 
       <Section>
         <Container>
-          <div className="space-y-16">
-            {industryCategories.map((category) => {
-              const items = industries.filter((i) => i.category === category);
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {industries.map((industry) => {
+              const content = getIndustryContent(industry.slug);
+              const Icon = getIcon(industry.icon);
               return (
-                <div key={category}>
-                  <h2 className="text-xl font-semibold text-foreground">
-                    {category}
+                <Link
+                  key={industry.slug}
+                  href={`/industries/${industry.slug}`}
+                  className="group flex flex-col rounded-2xl border border-border bg-surface p-8 transition-colors hover:border-brand-300 hover:bg-brand-50/40"
+                >
+                  <IconTile icon={Icon} size="lg" />
+                  <h2 className="mt-6 text-xl font-semibold text-foreground">
+                    {industry.name}
                   </h2>
-                  <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-                    {items.map((industry) => {
-                      const Icon = getIcon(industry.icon);
-                      return (
-                        <Link
-                          key={industry.slug}
-                          href={`/industries/${industry.slug}`}
-                          className="group flex items-center gap-3 rounded-xl border border-border bg-surface px-4 py-4 transition-colors hover:border-brand-300 hover:bg-brand-50"
-                        >
-                          <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600 group-hover:bg-white">
-                            <Icon className="size-4" />
-                          </span>
-                          <span className="text-sm font-medium text-foreground">
-                            {industry.name}
-                          </span>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
+                  <p className="mt-1 text-sm font-medium text-brand-700">
+                    {industry.tagline}
+                  </p>
+                  {content ? (
+                    <p className="mt-4 text-sm leading-relaxed text-muted">
+                      {content.heroDescription}
+                    </p>
+                  ) : null}
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 group-hover:text-brand-800">
+                    See what we build
+                    <ArrowRight className="size-4" />
+                  </span>
+                </Link>
               );
             })}
           </div>
@@ -60,8 +62,8 @@ export default function IndustriesPage() {
 
       <Section className="bg-surface">
         <CtaBanner
-          title="Don't see your exact industry?"
-          description="Chances are we've still worked on something similar. Tell us about your business and let's talk."
+          title="Not a pest control company or dental practice?"
+          description="We're intentionally focused on these two industries right now, so we can go deeper than a generalist agency can. Get in touch and we'll be straight with you about whether we're the right fit."
         />
       </Section>
     </>

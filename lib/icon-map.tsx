@@ -68,6 +68,13 @@ import {
   Compass,
   ThumbsUp,
   Building2,
+  UtensilsCrossed,
+  Gamepad2,
+  Recycle,
+  Music,
+  Bot,
+  Share2,
+  Workflow,
 } from "lucide-react";
 
 export const iconMap = {
@@ -139,6 +146,13 @@ export const iconMap = {
   Compass,
   ThumbsUp,
   Building2,
+  UtensilsCrossed,
+  Gamepad2,
+  Recycle,
+  Music,
+  Bot,
+  Share2,
+  Workflow,
 } satisfies Record<string, LucideIcon>;
 
 export type IconName = keyof typeof iconMap;

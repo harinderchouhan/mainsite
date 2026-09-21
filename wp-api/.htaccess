@@ -1,0 +1,14 @@
+# Only posts.php and post.php are meant to be requested directly.
+# Block direct access to the internal config/db/helper files.
+<FilesMatch "^(config(\.example)?|db|helpers)\.php$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Don't let anyone browse the folder listing.
+Options -Indexes

@@ -1,3 +1,9 @@
+export const auditOffer = {
+  title: "Free 5-Minute Website & Google Ranking Audit",
+  description:
+    "Not ready to talk yet? Send us your website and we'll send back a short, honest audit — how it's ranking locally, what's likely costing you calls or bookings, and the first things worth fixing.",
+};
+
 export const leadMagnet = {
   title: "The 10-Point Website Growth Checklist",
   description:

@@ -1,13 +1,12 @@
 import { Hero } from "@/components/home/Hero";
 import { StatsBand } from "@/components/home/StatsBand";
+import { ProblemSolution } from "@/components/home/ProblemSolution";
 import { ProcessSteps } from "@/components/home/ProcessSteps";
+import { Pricing } from "@/components/home/Pricing";
 import { FeaturedCaseStudy } from "@/components/home/FeaturedCaseStudy";
-import { TeamPreview } from "@/components/home/TeamPreview";
-import { LeadMagnetBanner } from "@/components/home/LeadMagnetBanner";
 import { FAQ } from "@/components/home/FAQ";
-import { ServicesGrid } from "@/components/ServicesGrid";
-import { WhyChooseUsGrid } from "@/components/WhyChooseUsGrid";
-import { IndustriesPreview } from "@/components/IndustriesPreview";
+import { WhatsIncluded } from "@/components/home/WhatsIncluded";
+import { VideoTestimonials } from "@/components/home/VideoTestimonials";
 import { PortfolioPreview } from "@/components/PortfolioPreview";
 import { CtaBanner } from "@/components/CtaBanner";
 import { Container } from "@/components/ui/Container";
@@ -19,99 +18,97 @@ export default function Home() {
       <Hero />
       <StatsBand />
 
-      <Section>
+      <Section className="!pt-10">
         <Container>
           <SectionHeading
-            eyebrow="What we do"
-            title="Services built to move the needle"
-            description="From first impression to final checkout, we handle the pieces that make a website actually perform for your business."
+            eyebrow="Testimonials"
+            title="Hear it from real clients"
+            description="No scripts, no actors — just business owners talking about what changed after we built their site."
             align="center"
             className="mx-auto"
           />
-          <div className="mt-12">
-            <ServicesGrid />
+          <div className="mt-8 sm:mt-10">
+            <VideoTestimonials />
           </div>
         </Container>
-      </Section>
-
-      <Section className="bg-surface">
-        <Container>
-          <SectionHeading
-            eyebrow="How we work"
-            title="A clear process from first call to launch"
-            description="No black boxes. You'll always know what stage your project is at and what's coming next."
-            align="center"
-            className="mx-auto"
-          />
-          <div className="mt-14">
-            <ProcessSteps />
-          </div>
-        </Container>
-      </Section>
-
-      <Section>
-        <Container>
-          <SectionHeading
-            eyebrow="Why HanuiT Solutions"
-            title="A team that treats your growth like our own"
-            description="Twelve years in, here's what clients consistently tell us they value most about working with us."
-            align="center"
-            className="mx-auto"
-          />
-          <div className="mt-12">
-            <WhyChooseUsGrid />
-          </div>
-        </Container>
-      </Section>
-
-      <Section className="bg-surface">
-        <Container>
-          <SectionHeading
-            eyebrow="Industries"
-            title="Built for your industry, not a generic template"
-            description="We've built sites for businesses across manufacturing, healthcare, trades, hospitality, and professional services."
-            align="center"
-            className="mx-auto"
-          />
-          <div className="mt-12">
-            <IndustriesPreview />
-          </div>
-        </Container>
-      </Section>
-
-      <Section>
-        <FeaturedCaseStudy />
       </Section>
 
       <Section className="bg-surface">
         <Container>
           <SectionHeading
             eyebrow="Our work"
-            title="Real projects, real outcomes"
+            title="Results / Case Studies"
+            description="Real client websites and real outcomes — not mockups."
             align="center"
             className="mx-auto"
           />
-          <div className="mt-12">
+        </Container>
+        <div className="mt-8 sm:mt-12">
+          <FeaturedCaseStudy />
+        </div>
+        <Container>
+          <div className="mt-8 sm:mt-12">
             <PortfolioPreview />
           </div>
         </Container>
       </Section>
 
-      <Section className="bg-surface">
-        <LeadMagnetBanner />
+      <Section>
+        <Container>
+          <SectionHeading
+            eyebrow="Sound familiar?"
+            title="The Problem"
+            description="Most pest control and dental practice owners we talk to are in one of these two columns. Here's what changes when you move to the second one."
+            align="center"
+            className="mx-auto"
+          />
+          <div className="mt-8 sm:mt-12">
+            <ProblemSolution />
+          </div>
+        </Container>
       </Section>
 
       <Section className="bg-surface">
         <Container>
           <SectionHeading
-            eyebrow="Leadership"
-            title="The people behind the work"
-            description="A small, senior team — not a rotating cast of subcontractors."
+            eyebrow="What we do"
+            title="What's Included"
+            description="No agency jargon — here's exactly what you get, in plain terms."
             align="center"
             className="mx-auto"
           />
-          <div className="mt-12">
-            <TeamPreview />
+          <div className="mt-8 sm:mt-12">
+            <WhatsIncluded />
+          </div>
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <SectionHeading
+            eyebrow="How we work"
+            title="How It Works"
+            description="No black boxes. Whether you run a pest control company or a dental practice, you'll always know what stage your project is at and what's coming next."
+            align="center"
+            className="mx-auto"
+          />
+          <div className="mt-8 sm:mt-14">
+            <ProcessSteps />
+          </div>
+        </Container>
+      </Section>
+
+      <Section className="bg-surface">
+        <Container>
+          <SectionHeading
+            eyebrow="Investment"
+            title="Pricing"
+            description="Every pest control company and dental practice is different, so we don't do one-size-fits-all packages — here's roughly what's included at each level of engagement."
+            align="center"
+            className="mx-auto"
+          />
+          <div className="mt-8 sm:mt-14">
+            <Pricing />
           </div>
         </Container>
       </Section>
@@ -121,17 +118,21 @@ export default function Home() {
           <SectionHeading
             eyebrow="FAQ"
             title="Questions we hear a lot"
+            description="From pest control operators and dental practice owners considering a new website."
             align="center"
             className="mx-auto"
           />
-          <div className="mt-12">
+          <div className="mt-8 sm:mt-12">
             <FAQ />
           </div>
         </Container>
       </Section>
 
       <Section>
-        <CtaBanner />
+        <CtaBanner
+          title="Ready to grow your pest control or dental business online?"
+          description="Tell us about your business and we'll put together a free, no-obligation quote — built specifically for pest control companies and dental practices."
+        />
       </Section>
     </>
   );

@@ -7,6 +7,7 @@ type LeadPayload = {
   name: string;
   email: string;
   source: string;
+  website?: string;
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -20,7 +21,7 @@ function validate(body: unknown): { ok: true; data: LeadPayload } | { ok: false;
     return { ok: false, error: "Invalid request body." };
   }
 
-  const { name, email, source } = body as Record<string, unknown>;
+  const { name, email, source, website } = body as Record<string, unknown>;
 
   if (!isNonEmptyString(name) || name.trim().length < 2) {
     return { ok: false, error: "Please enter your name." };
@@ -35,6 +36,7 @@ function validate(body: unknown): { ok: true; data: LeadPayload } | { ok: false;
       name: name.trim(),
       email: email.trim(),
       source: isNonEmptyString(source) ? source.trim() : "unknown",
+      website: isNonEmptyString(website) ? website.trim() : undefined,
     },
   };
 }
@@ -58,7 +60,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const { name, email, source } = result.data;
+  const { name, email, source, website } = result.data;
 
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, CONTACT_TO_EMAIL } =
     process.env;
@@ -81,7 +83,9 @@ export async function POST(request: Request) {
         to: CONTACT_TO_EMAIL,
         replyTo: email,
         subject: `New lead — ${source} (${name})`,
-        text: `Name: ${name}\nEmail: ${email}\nSource: ${source}`,
+        text: `Name: ${name}\nEmail: ${email}\nSource: ${source}${
+          website ? `\nWebsite: ${website}` : ""
+        }`,
       });
     } catch (error) {
       console.error("Lead capture: failed to send email via SMTP.", error);
@@ -101,6 +105,7 @@ export async function POST(request: Request) {
       name,
       email,
       source,
+      website,
     });
   }
 

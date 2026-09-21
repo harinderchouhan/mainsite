@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Calendar, User } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, List, User } from "lucide-react";
 import { getWpPost } from "@/lib/wp-posts";
+import { addHeadingIdsAndExtractToc, estimateReadingTime } from "@/lib/blog-format";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { GridPattern } from "@/components/ui/GridPattern";
@@ -47,6 +48,9 @@ export default async function BlogPostPage({
   const post = await getWpPost(slug);
   if (!post) notFound();
 
+  const { html: content, toc } = addHeadingIdsAndExtractToc(post.content);
+  const readingTime = estimateReadingTime(post.content);
+
   return (
     <>
       <div className="relative overflow-hidden bg-mesh">
@@ -63,7 +67,7 @@ export default async function BlogPostPage({
             </Link>
 
             {post.categories.length > 0 ? (
-              <span className="mt-6 inline-flex items-center rounded-full border border-brand-200 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700 backdrop-blur-sm">
+              <span className="mt-5 flex w-fit items-center rounded-full border border-brand-200 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700 backdrop-blur-sm">
                 {post.categories[0]}
               </span>
             ) : null}
@@ -82,6 +86,10 @@ export default async function BlogPostPage({
               <span className="flex items-center gap-1.5">
                 <Calendar className="size-4" />
                 {formatDate(post.date)}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Clock className="size-4" />
+                {readingTime} min read
               </span>
             </div>
           </div>
@@ -104,9 +112,33 @@ export default async function BlogPostPage({
               </div>
             ) : null}
 
+            {toc.length > 2 ? (
+              <nav
+                aria-label="Table of contents"
+                className="mt-10 rounded-2xl border border-border bg-surface p-6"
+              >
+                <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                  <List className="size-4 text-brand-600" />
+                  In this article
+                </div>
+                <ul className="mt-3 space-y-2">
+                  {toc.map((item) => (
+                    <li key={item.id}>
+                      <a
+                        href={`#${item.id}`}
+                        className="text-sm text-muted transition-colors hover:text-brand-700"
+                      >
+                        {item.text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ) : null}
+
             <div
               className="blog-content mt-10"
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: content }}
             />
           </div>
         </Container>

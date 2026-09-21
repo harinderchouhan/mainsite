@@ -5,11 +5,14 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar, Clock, List, User } from "lucide-react";
 import { getWpPost } from "@/lib/wp-posts";
 import { addHeadingIdsAndExtractToc, estimateReadingTime } from "@/lib/blog-format";
+import { site } from "@/lib/site";
+import { articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { GridPattern } from "@/components/ui/GridPattern";
 import { Blob } from "@/components/ui/Blob";
 import { CtaBanner } from "@/components/CtaBanner";
+import { JsonLd } from "@/components/JsonLd";
 
 type Params = { slug: string };
 
@@ -27,13 +30,30 @@ export async function generateMetadata({
   const post = await getWpPost(slug);
   if (!post) return {};
 
+  const url = `${site.url}/blog/${post.slug}`;
+
   return {
     title: post.title,
     description: post.excerpt,
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
+      url,
       type: "article",
+      publishedTime: post.date,
+      modifiedTime: post.modified,
+      authors: [post.author],
+      section: post.categories[0],
+      tags: post.categories,
+      images: post.featuredImage ? [post.featuredImage] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
       images: post.featuredImage ? [post.featuredImage] : undefined,
     },
   };
@@ -50,9 +70,28 @@ export default async function BlogPostPage({
 
   const { html: content, toc } = addHeadingIdsAndExtractToc(post.content);
   const readingTime = estimateReadingTime(post.content);
+  const url = `${site.url}/blog/${post.slug}`;
 
   return (
     <>
+      <JsonLd
+        data={articleSchema({
+          title: post.title,
+          description: post.excerpt,
+          url,
+          image: post.featuredImage,
+          datePublished: post.date,
+          dateModified: post.modified,
+          authorName: post.author,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", url: site.url },
+          { name: "Blog", url: `${site.url}/blog` },
+          { name: post.title, url },
+        ])}
+      />
       <div className="relative overflow-hidden bg-mesh">
         <GridPattern className="opacity-60" />
         <Blob tone="brand" className="-left-24 -top-24 h-72 w-72" />

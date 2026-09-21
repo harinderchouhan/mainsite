@@ -4,11 +4,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar } from "lucide-react";
 import { getWpCaseStudy } from "@/lib/wp-case-studies";
+import { site } from "@/lib/site";
+import { articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { GridPattern } from "@/components/ui/GridPattern";
 import { Blob } from "@/components/ui/Blob";
 import { CtaBanner } from "@/components/CtaBanner";
+import { JsonLd } from "@/components/JsonLd";
 
 type Params = { slug: string };
 
@@ -26,13 +29,28 @@ export async function generateMetadata({
   const caseStudy = await getWpCaseStudy(slug);
   if (!caseStudy) return {};
 
+  const url = `${site.url}/portfolio/${caseStudy.slug}`;
+
   return {
     title: caseStudy.title,
     description: caseStudy.excerpt,
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
       title: caseStudy.title,
       description: caseStudy.excerpt,
+      url,
       type: "article",
+      publishedTime: caseStudy.date,
+      modifiedTime: caseStudy.modified,
+      authors: [caseStudy.author],
+      images: caseStudy.featuredImage ? [caseStudy.featuredImage] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: caseStudy.title,
+      description: caseStudy.excerpt,
       images: caseStudy.featuredImage ? [caseStudy.featuredImage] : undefined,
     },
   };
@@ -47,8 +65,28 @@ export default async function CaseStudyPage({
   const caseStudy = await getWpCaseStudy(slug);
   if (!caseStudy) notFound();
 
+  const url = `${site.url}/portfolio/${caseStudy.slug}`;
+
   return (
     <>
+      <JsonLd
+        data={articleSchema({
+          title: caseStudy.title,
+          description: caseStudy.excerpt,
+          url,
+          image: caseStudy.featuredImage,
+          datePublished: caseStudy.date,
+          dateModified: caseStudy.modified,
+          authorName: caseStudy.author,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", url: site.url },
+          { name: "Portfolio", url: `${site.url}/portfolio` },
+          { name: caseStudy.title, url },
+        ])}
+      />
       <div className="relative overflow-hidden bg-mesh">
         <GridPattern className="opacity-60" />
         <Blob tone="brand" className="-left-24 -top-24 h-72 w-72" />
@@ -62,7 +100,7 @@ export default async function CaseStudyPage({
               Back to portfolio
             </Link>
 
-            <span className="mt-6 inline-flex items-center rounded-full border border-brand-200 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700 backdrop-blur-sm">
+            <span className="mt-5 flex w-fit items-center rounded-full border border-brand-200 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700 backdrop-blur-sm">
               Case study
             </span>
 

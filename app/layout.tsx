@@ -6,6 +6,8 @@ import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/leadgen/WhatsAppButton";
 import { StickyCtaBar } from "@/components/leadgen/StickyCtaBar";
 import { ExitIntentModal } from "@/components/leadgen/ExitIntentModal";
+import { JsonLd } from "@/components/JsonLd";
+import { organizationSchema, websiteSchema } from "@/lib/schema";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -22,24 +24,27 @@ const siteUrl = "https://www.hanuitsolutions.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "HanuiT Solutions — Digital Solutions for Business Growth",
+    default: "HanuiT Solutions — Websites for Pest Control & Dental Businesses",
     template: "%s | HanuiT Solutions",
   },
   description:
-    "HanuiT Solutions designs and builds websites, e-commerce stores, and SEO strategies that grow real businesses. 1000+ clients served, 12+ years of experience.",
+    "HanuiT Solutions designs and builds websites, SEO, ads, and social media for pest control companies and dental practices. 1000+ clients served, 12+ years of experience.",
   keywords: [
+    "pest control website design",
+    "dentist website design",
+    "dental website design",
+    "pest control SEO",
+    "dental SEO",
     "web design",
-    "web development",
-    "SEO services",
-    "ecommerce solutions",
-    "WordPress services",
-    "digital agency",
     "HanuiT Solutions",
   ],
+  alternates: {
+    canonical: siteUrl,
+  },
   openGraph: {
-    title: "HanuiT Solutions — Digital Solutions for Business Growth",
+    title: "HanuiT Solutions — Websites for Pest Control & Dental Businesses",
     description:
-      "Websites, e-commerce, and SEO built to grow real businesses. 1000+ clients served, 12+ years of experience.",
+      "Websites, SEO, ads, and social media built specifically for pest control companies and dental practices. 1000+ clients served, 12+ years of experience.",
     url: siteUrl,
     siteName: "HanuiT Solutions",
     locale: "en_US",
@@ -47,9 +52,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HanuiT Solutions — Digital Solutions for Business Growth",
+    title: "HanuiT Solutions — Websites for Pest Control & Dental Businesses",
     description:
-      "Websites, e-commerce, and SEO built to grow real businesses.",
+      "Websites, SEO, ads, and social media built specifically for pest control companies and dental practices.",
   },
 };
 
@@ -60,6 +65,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} ${sora.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
+        <JsonLd data={organizationSchema()} />
+        <JsonLd data={websiteSchema()} />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

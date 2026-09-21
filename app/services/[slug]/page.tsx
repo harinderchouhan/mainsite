@@ -5,7 +5,10 @@ import { CheckCircle2, ArrowRight, ArrowUpRight, Phone } from "lucide-react";
 import { services, getService } from "@/lib/services";
 import { trustFaqs } from "@/lib/faq";
 import { getIcon } from "@/lib/icon-map";
+import { site } from "@/lib/site";
+import { breadcrumbSchema, faqPageSchema, serviceSchema } from "@/lib/schema";
 import { CtaBanner } from "@/components/CtaBanner";
+import { JsonLd } from "@/components/JsonLd";
 import { FAQ } from "@/components/home/FAQ";
 import { StatsBand } from "@/components/home/StatsBand";
 import { FeaturedCaseStudy } from "@/components/home/FeaturedCaseStudy";
@@ -33,9 +36,19 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = getService(slug);
   if (!service) return {};
+  const url = `${site.url}/services/${service.slug}`;
   return {
     title: service.name,
     description: service.heroDescription,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: service.name,
+      description: service.heroDescription,
+      url,
+      type: "website",
+    },
   };
 }
 
@@ -50,9 +63,26 @@ export default async function ServiceDetailPage({
 
   const Icon = getIcon(service.icon);
   const otherServices = services.filter((s) => s.slug !== service.slug);
+  const url = `${site.url}/services/${service.slug}`;
+  const allFaqs = [...service.faqs, ...trustFaqs];
 
   return (
     <>
+      <JsonLd
+        data={serviceSchema({
+          name: service.name,
+          description: service.heroDescription,
+          url,
+        })}
+      />
+      <JsonLd data={faqPageSchema(allFaqs)} />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", url: site.url },
+          { name: "Services", url: `${site.url}/services` },
+          { name: service.name, url },
+        ])}
+      />
       <div className="relative overflow-hidden bg-mesh">
         <GridPattern className="opacity-60" />
         <Blob tone="brand" className="-left-24 -top-24 h-72 w-72" />
@@ -322,7 +352,7 @@ export default async function ServiceDetailPage({
             className="mx-auto"
           />
           <div className="mt-12">
-            <FAQ faqs={[...service.faqs, ...trustFaqs]} />
+            <FAQ faqs={allFaqs} />
           </div>
         </Container>
       </Section>

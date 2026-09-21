@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { site } from "@/lib/site";
+import { breadcrumbSchema } from "@/lib/schema";
 import { PageHeader } from "@/components/PageHeader";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { JsonLd } from "@/components/JsonLd";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
@@ -9,7 +12,10 @@ import { Card } from "@/components/ui/Card";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Get in touch with HanuiT Solutions for a free quote on web design, web development, SEO, ecommerce, or WordPress services.",
+    "Get in touch with HanuiT Solutions for a free quote on website design, SEO, ads, or social media for pest control companies and dental practices.",
+  alternates: {
+    canonical: `${site.url}/contact`,
+  },
 };
 
 const contactDetails = [
@@ -41,6 +47,12 @@ const contactDetails = [
 export default function ContactPage() {
   return (
     <>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", url: site.url },
+          { name: "Contact", url: `${site.url}/contact` },
+        ])}
+      />
       <PageHeader
         eyebrow="Contact"
         title="Let's talk about your project"

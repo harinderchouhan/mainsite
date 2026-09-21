@@ -3,9 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowLeft, Sparkles } from "lucide-react";
 import { getWpCaseStudies } from "@/lib/wp-case-studies";
+import { site } from "@/lib/site";
+import { breadcrumbSchema } from "@/lib/schema";
 import { PageHeader } from "@/components/PageHeader";
 import { PortfolioFilter } from "@/components/PortfolioFilter";
 import { CtaBanner } from "@/components/CtaBanner";
+import { JsonLd } from "@/components/JsonLd";
 import { Container } from "@/components/ui/Container";
 import { Section, SectionHeading } from "@/components/ui/Section";
 
@@ -13,6 +16,9 @@ export const metadata: Metadata = {
   title: "Portfolio",
   description:
     "Real case studies from HanuiT Solutions — website redesigns, SEO growth, and full rebrands for real clients.",
+  alternates: {
+    canonical: `${site.url}/portfolio`,
+  },
 };
 
 function formatDate(iso: string) {
@@ -34,6 +40,12 @@ export default async function PortfolioPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", url: site.url },
+          { name: "Portfolio", url: `${site.url}/portfolio` },
+        ])}
+      />
       <PageHeader
         eyebrow="Portfolio"
         title="Work we're proud of"

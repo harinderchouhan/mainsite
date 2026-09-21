@@ -5,7 +5,10 @@ import { getIndustryContent } from "@/lib/industry-content";
 import { getService } from "@/lib/services";
 import { getIcon } from "@/lib/icon-map";
 import { getIndustryPortfolio } from "@/lib/industry-portfolios";
+import { site } from "@/lib/site";
+import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
 import { CtaBanner } from "@/components/CtaBanner";
+import { JsonLd } from "@/components/JsonLd";
 import { Container } from "@/components/ui/Container";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { IconTile } from "@/components/ui/IconTile";
@@ -27,9 +30,19 @@ export async function generateMetadata({
   const industry = getIndustry(slug);
   const content = industry ? getIndustryContent(industry.slug) : undefined;
   if (!industry || !content) return {};
+  const url = `${site.url}/industries/${industry.slug}`;
   return {
     title: `Web Design & Digital Solutions for ${industry.name}`,
     description: content.heroDescription,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: `Web Design & Digital Solutions for ${industry.name}`,
+      description: content.heroDescription,
+      url,
+      type: "website",
+    },
   };
 }
 
@@ -50,9 +63,24 @@ export default async function IndustryDetailPage({
     .map((s) => getService(s))
     .filter((s): s is NonNullable<typeof s> => Boolean(s));
   const portfolioItems = getIndustryPortfolio(industry.slug);
+  const url = `${site.url}/industries/${industry.slug}`;
 
   return (
     <>
+      <JsonLd
+        data={serviceSchema({
+          name: `Web Design for ${industry.name}`,
+          description: content.heroDescription,
+          url,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", url: site.url },
+          { name: "Industries", url: `${site.url}/industries` },
+          { name: industry.name, url },
+        ])}
+      />
       <div className="relative overflow-hidden bg-mesh">
         <Container className="relative py-16 sm:py-24">
           <div className="mx-auto max-w-2xl text-center">

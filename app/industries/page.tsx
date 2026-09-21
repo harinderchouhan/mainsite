@@ -4,8 +4,11 @@ import { ArrowRight } from "lucide-react";
 import { industries } from "@/lib/industries";
 import { getIndustryContent } from "@/lib/industry-content";
 import { getIcon } from "@/lib/icon-map";
+import { site } from "@/lib/site";
+import { breadcrumbSchema } from "@/lib/schema";
 import { PageHeader } from "@/components/PageHeader";
 import { CtaBanner } from "@/components/CtaBanner";
+import { JsonLd } from "@/components/JsonLd";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { IconTile } from "@/components/ui/IconTile";
@@ -14,11 +17,20 @@ export const metadata: Metadata = {
   title: "Industries We Serve",
   description:
     "HanuiT Solutions builds websites for pest control companies and dental clinics — two industries we focus on deeply, instead of spreading thin across everything.",
+  alternates: {
+    canonical: `${site.url}/industries`,
+  },
 };
 
 export default function IndustriesPage() {
   return (
     <>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", url: site.url },
+          { name: "Industries", url: `${site.url}/industries` },
+        ])}
+      />
       <PageHeader
         eyebrow="Industries"
         title="We build for two industries. That's the point."

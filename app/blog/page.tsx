@@ -3,7 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowLeft, Palette, TrendingUp, ShoppingCart, Sparkles } from "lucide-react";
 import { getWpPosts } from "@/lib/wp-posts";
+import { site } from "@/lib/site";
+import { breadcrumbSchema } from "@/lib/schema";
 import { NotifyForm } from "@/components/blog/NotifyForm";
+import { JsonLd } from "@/components/JsonLd";
 import { PageHeader } from "@/components/PageHeader";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
@@ -13,7 +16,10 @@ import { Blob } from "@/components/ui/Blob";
 export const metadata: Metadata = {
   title: "Blog",
   description:
-    "Insights and resources on web design, SEO, and ecommerce from HanuiT Solutions.",
+    "Insights and resources on website design, SEO, ads, and social media for pest control companies and dental practices, from HanuiT Solutions.",
+  alternates: {
+    canonical: `${site.url}/blog`,
+  },
 };
 
 const topics = [
@@ -102,10 +108,16 @@ export default async function BlogPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", url: site.url },
+          { name: "Blog", url: `${site.url}/blog` },
+        ])}
+      />
       <PageHeader
         eyebrow="Insights & Resources"
         title="The blog"
-        description="Practical, no-fluff writing on web design, SEO, and ecommerce — the same thinking we bring to client projects."
+        description="Practical, no-fluff writing on website design, SEO, ads, and social media for pest control companies and dental practices."
       />
 
       <Section>

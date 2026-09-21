@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Target, Eye } from "lucide-react";
+import { site } from "@/lib/site";
+import { breadcrumbSchema } from "@/lib/schema";
 import { PageHeader } from "@/components/PageHeader";
 import { WhyChooseUsGrid } from "@/components/WhyChooseUsGrid";
 import { CtaBanner } from "@/components/CtaBanner";
+import { JsonLd } from "@/components/JsonLd";
 import { Container } from "@/components/ui/Container";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { StatCard } from "@/components/ui/StatCard";
@@ -13,6 +16,9 @@ export const metadata: Metadata = {
   title: "About Us",
   description:
     "HanuiT Solutions is a digital agency with 12+ years of experience, 1000+ clients served, and 1200+ projects completed. Meet the team behind the work.",
+  alternates: {
+    canonical: `${site.url}/about`,
+  },
 };
 
 const stats = [
@@ -24,6 +30,12 @@ const stats = [
 export default function AboutPage() {
   return (
     <>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", url: site.url },
+          { name: "About", url: `${site.url}/about` },
+        ])}
+      />
       <PageHeader
         eyebrow="About HanuiT Solutions"
         title="A team built to make your website actually work for you"

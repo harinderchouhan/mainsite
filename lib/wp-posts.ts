@@ -63,7 +63,12 @@ function decodeEntities(text: string): string {
     .replace(/&#8221;/g, "”")
     .replace(/&#8211;/g, "–")
     .replace(/&#8212;/g, "—")
+    .replace(/&hellip;|&#8230;/g, "…")
     .replace(/&nbsp;/g, " ")
+    .replace(/&quot;/g, '"')
+    .replace(/&#0?39;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
     .replace(/&amp;/g, "&");
 }
 

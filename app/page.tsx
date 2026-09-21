@@ -9,12 +9,16 @@ import { WhatsIncluded } from "@/components/home/WhatsIncluded";
 import { VideoTestimonials } from "@/components/home/VideoTestimonials";
 import { PortfolioPreview } from "@/components/PortfolioPreview";
 import { CtaBanner } from "@/components/CtaBanner";
+import { JsonLd } from "@/components/JsonLd";
+import { faqPageSchema } from "@/lib/schema";
+import { faqs } from "@/lib/faq";
 import { Container } from "@/components/ui/Container";
 import { Section, SectionHeading } from "@/components/ui/Section";
 
 export default function Home() {
   return (
     <>
+      <JsonLd data={faqPageSchema(faqs)} />
       <Hero />
       <StatsBand />
 

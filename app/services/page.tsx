@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import { site } from "@/lib/site";
+import { breadcrumbSchema } from "@/lib/schema";
 import { PageHeader } from "@/components/PageHeader";
 import { ServicesGrid } from "@/components/ServicesGrid";
 import { CtaBanner } from "@/components/CtaBanner";
+import { JsonLd } from "@/components/JsonLd";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 
@@ -9,6 +12,9 @@ export const metadata: Metadata = {
   title: "Services",
   description:
     "Website design, SEO, ads management, social media, automation, and AI workflows from HanuiT Solutions — built specifically for pest control and dental businesses.",
+  alternates: {
+    canonical: `${site.url}/services`,
+  },
 };
 
 const stats = [
@@ -21,6 +27,12 @@ const stats = [
 export default function ServicesPage() {
   return (
     <>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", url: site.url },
+          { name: "Services", url: `${site.url}/services` },
+        ])}
+      />
       <PageHeader
         eyebrow="Services"
         title="Everything you need to grow online"
